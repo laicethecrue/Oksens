@@ -9,7 +9,13 @@ let state = {
   streak: parseInt(localStorage.getItem('streak')||'0',10),
   lastISO: localStorage.getItem('lastISO')||'',
   quizSel: {}, qIndex:0, reflex:{round:0,hits:0,done:false}, cardsDone: JSON.parse(localStorage.getItem('cardsDone')||'{}')
-};
+};function allQuestions(){
+  let all = [];
+  for (let day in DB.questions){
+    all = all.concat(DB.questions[day]);
+  }
+  return all;
+}
 
 fetch('./data.json').then(r=>r.json()).then(data=>{
   DB = data;
