@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>OKSENS – Hockey Sense</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main id="app">
+    <section id="home" class="view">
+      <h1>OKSENS – Hockey Sense 🏒</h1>
+      <div id="hud" class="card"></div>
+      <div class="card">
+        <h2>🏆 Mission du jour</h2>
+        <p id="mission"></p>
+      </div>
+      <div class="btns">
+        <button onclick="go('quiz')">🎯 Quiz du jour</button>
+        <button onclick="go('cards')">🎴 Cartes stratégiques</button>
+        <button onclick="go('reflex')">⚡ Défi réflexes</button>
+      </div>
+      <p class="hint">Astuce : ajoute l’app à l’écran d’accueil (Partager → “Sur l’écran d’accueil”).</p>
+    </section>
+
+    <section id="quiz" class="view hidden">
+      <button class="back" onclick="go('home')">← Retour</button>
+      <h2>🧠 Quiz</h2>
+      <div id="qbox"></div>
+      <div class="row">
+        <button id="prevBtn" onclick="prevQ()">Précédent</button>
+        <button id="nextBtn" onclick="nextQ()">Suivant</button>
+        <button id="doneBtn" class="primary" onclick="finishQuiz()">Terminer</button>
+      </div>
+    </section>
+
+    <section id="cards" class="view hidden">
+      <button class="back" onclick="go('home')">← Retour</button>
+      <h2>🎴 Cartes</h2>
+      <div id="cardsList"></div>
+    </section>
+
+    <section id="reflex" class="view hidden">
+      <button class="back" onclick="go('home')">← Retour</button>
+      <h2>⚡ Défi réflexes</h2>
+      <p id="reflexInfo"></p>
+      <div id="grid" class="grid"></div>
+      <div class="row">
+        <button onclick="startReflex()">Rejouer</button>
+        <button class="primary" onclick="validateReflex()">Valider (+100 XP si ≥3)</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js');
+    }
+  </script>
+</body>
+</html>
