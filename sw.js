@@ -1,4 +1,4 @@
-const CACHE = 'oksens-v1';
+const CACHE = "oksens-v4"; 
 const ASSETS = [
   './', './index.html', './styles.css', './app.js',
   './data.json', './manifest.webmanifest'
