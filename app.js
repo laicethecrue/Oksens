@@ -25,9 +25,9 @@ async function loadQuestions() {
 // --- Utilitaires ---
 function questionsToday(){ return DB.questions[state.day] || []; }
 function allQuestions(){
-  let all=[]; for (let d in DB.questions) all=all.concat(DB.questions[d]); return all;
+  let all=[]; for (let d in DB.questions) if (Array.isArray(DB.questions[d])) all=all.concat(DB.questions[d]); return all;
 }
-function pointsFor(q){ return q.p ? q.p : 10; }
+function pointsFor(q){ return Number.isFinite(q.p)? q.p : 10; }
 function rewardBadge(pts){
   if (pts>=60) return "🏆 Or";
   if (pts>=30) return "🥈 Argent";
@@ -42,18 +42,18 @@ function ensureRecord(q){
 function resetSession(){ state.points=0; state.answered={}; render(); }
 function go(p){ state.page=p; render(); }
 
-// --- Gestion réponse ---
+// --- Gestion réponse (boutons restent actifs) ---
 function answerQuestion(q, choice){
   const rec=ensureRecord(q);
-  if (rec.correct){ alert("⭐ Déjà validée !"); return; }
-
   if (choice===q.a){
-    rec.correct=true;
-    if (rec.tries.length===0){
-      state.points+=pointsFor(q);
-      alert(`✅ Bonne réponse ! +${pointsFor(q)} pts`);
+    const firstTry = rec.tries.length===0;
+    // si déjà validée, pas de points, mais ok pour recliquer
+    if (!rec.correct){
+      rec.correct=true;
+      if (firstTry){ state.points+=pointsFor(q); alert(`✅ Bonne réponse ! +${pointsFor(q)} pts`); }
+      else { alert("✅ Bonne réponse (0 pt car pas du 1er coup)"); }
     } else {
-      alert("✅ Bonne réponse (0 pt car pas du 1er coup)");
+      alert("⭐ Déjà validée !");
     }
   } else {
     if (!rec.tries.includes(choice)) rec.tries.push(choice);
@@ -76,8 +76,8 @@ V.menu=()=>`
 `;
 
 function selectDay(){
-  const jours=["lundi","mardi","mercredi","jeudi","vendredi","samedi","dimanche"];
-  const choix=prompt("Choisis un jour :");
+  const jours=["lundi","mardi","mercredi","jeudi","vendredi","samedi","dimanche","avantpasse"];
+  const choix=prompt("Choisis un jour : lundi, mardi, mercredi, jeudi, vendredi, samedi, dimanche, avantpasse");
   if (choix && jours.includes(choix.toLowerCase())){ state.day=choix.toLowerCase(); go("quiz"); }
   else alert("Jour invalide");
 }
@@ -106,17 +106,19 @@ function renderQuestion(q,i){
 }
 
 V.quiz=()=>{
-  const qs=questionsToday(); if (!qs.length) return scoreHeader()+"<p>Aucune question.</p><button onclick='go(\"menu\")'>⬅ Retour</button>";
-  let h=scoreHeader()+"<h2>📅 Quiz du jour ("+state.day+")</h2>";
+  const qs=questionsToday();
+  if (!qs.length) return scoreHeader()+`<p>Aucune question pour <b>${state.day||"?"}</b>.</p><button onclick='go("menu")'>⬅ Retour</button>`;
+  let h=scoreHeader()+`<h2>📅 Quiz du jour (${state.day})</h2>`;
   qs.forEach((q,i)=>h+=renderQuestion(q,i));
-  return h+"<button onclick='go(\"menu\")'>⬅ Retour</button>";
+  return h+`<button onclick='go("menu")'>⬅ Retour</button>`;
 };
 
 V.quizAll=()=>{
-  const qs=allQuestions(); if (!qs.length) return scoreHeader()+"<p>Aucune question.</p><button onclick='go(\"menu\")'>⬅ Retour</button>";
-  let h=scoreHeader()+"<h2>📚 Toutes les questions ("+qs.length+")</h2>";
+  const qs=allQuestions();
+  if (!qs.length) return scoreHeader()+`<p>Aucune question trouvée.</p><button onclick='go("menu")'>⬅ Retour</button>`;
+  let h=scoreHeader()+`<h2>📚 Toutes les questions (${qs.length})</h2>`;
   qs.forEach((q,i)=>h+=renderQuestion(q,i));
-  return h+"<button onclick='go(\"menu\")'>⬅ Retour</button>";
+  return h+`<button onclick='go("menu")'>⬅ Retour</button>`;
 };
 
 // --- Rendu ---
