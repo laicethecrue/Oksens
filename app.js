@@ -2,8 +2,9 @@
 const state = {
   page: "menu",
   day: "",
-  points: 0,                 // total de points de la session en cours
-  answered: {}               // clés des questions déjà répondues (pour éviter le double comptage)
+  points: 0,
+  // answered[key] = { attempts: number, correct: bool, tried: Set(indices) }
+  answered: {}
 };
 
 // --- Base de données (chargée depuis data.json) ---
@@ -27,7 +28,6 @@ async function loadQuestions() {
 function questionsToday() {
   return DB.questions[state.day] || [];
 }
-
 function allQuestions() {
   let all = [];
   for (let day in DB.questions) {
@@ -37,53 +37,66 @@ function allQuestions() {
   }
   return all;
 }
-
-// score par question : si le champ "p" n'existe pas dans data.json → 10 par défaut
+// points par question (par défaut 10 si "p" absent)
 function pointsFor(q) {
   const p = Number(q.p);
   return Number.isFinite(p) && p > 0 ? p : 10;
 }
-
-// badge de récompense en fonction des points
+// badge récompense
 function rewardBadge(pts) {
   if (pts >= 60) return `🏆 Or`;
   if (pts >= 30) return `🥈 Argent`;
   return `🥉 Bronze`;
 }
-
-// clé unique pour mémoriser qu'une question a déjà été répondue
+// clé unique question
 function qKey(q) {
-  // on s'appuie sur l'énoncé + premiers choix pour créer une clé simple
-  return `${q.q}::${(q.c||[]).slice(0,2).join("|")}`;
+  return `${q.q}::${(q.c || []).slice(0, 2).join("|")}`;
 }
-
+function ensureRecord(key) {
+  if (!state.answered[key]) state.answered[key] = { attempts: 0, correct: false, tried: {} };
+  return state.answered[key];
+}
 function resetSession() {
   state.points = 0;
   state.answered = {};
   render();
 }
-
 function go(p) {
   state.page = p;
   render();
 }
 
-// gestion d'une réponse
-function answerQuestion(q, choiceIndex, scope) {
+// --- Gestion de réponse (boutons non figés) ---
+function answerQuestion(q, choiceIndex) {
   const key = qKey(q);
-  const already = !!state.answered[key];
+  const rec = ensureRecord(key);
+
+  // si déjà validée, on autorise le clic (pour réviser) mais sans points
+  if (rec.correct) {
+    alert("⭐ Déjà validée ! (pas de points supplémentaires)");
+    return;
+  }
+
+  // 1 tentative de plus
+  rec.attempts = (rec.attempts || 0) + 1;
+  rec.tried[choiceIndex] = true;
 
   const isCorrect = choiceIndex === q.a;
-  if (isCorrect && !already) {
-    state.points += pointsFor(q);
-  }
-  // on marque la question comme répondue (et on retient si c'était correct)
-  state.answered[key] = { correct: isCorrect };
 
-  // on ré-affiche la vue en cours (quiz du jour ou toutes les questions)
+  if (isCorrect) {
+    // points uniquement si la 1re tentative est correcte
+    if (rec.attempts === 1) {
+      state.points += pointsFor(q);
+      alert(`✅ Bonne réponse du premier coup ! +${pointsFor(q)} pts`);
+    } else {
+      alert("✅ Bonne réponse ! (0 pt car ce n'était pas la première tentative)");
+    }
+    rec.correct = true;
+  } else {
+    alert("❌ Mauvaise réponse… Essaie encore !");
+  }
+
   render();
-  // petit feedback
-  alert(isCorrect ? `✅ Bonne réponse ! +${pointsFor(q)} pts` : "❌ Mauvaise réponse…");
 }
 
 // --- Vues ---
@@ -113,7 +126,7 @@ function selectDay() {
   }
 }
 
-// Cartouche de points en haut de chaque vue
+// Cartouche points/insigne
 function scoreHeader() {
   return `
     <div class="card">
@@ -123,21 +136,26 @@ function scoreHeader() {
   `;
 }
 
-function renderQuestionCard(q, idx, scope) {
+// rendu d'une carte question (boutons toujours actifs)
+function renderQuestionCard(q, idx) {
   const key = qKey(q);
-  const wasAnswered = !!state.answered[key];
-  const wasCorrect = wasAnswered ? !!state.answered[key].correct : null;
+  const rec = state.answered[key] || { attempts: 0, correct: false, tried: {} };
+  const tried = rec.tried || {};
   const pts = pointsFor(q);
 
   return `
     <div class="card">
-      <div class="badge">Question ${idx+1} • ${pts} pts</div>
+      <div class="badge">Question ${idx + 1} • ${pts} pts ${rec.correct ? " • ⭐ Validée" : ""}</div>
       <p><b>${q.q}</b></p>
       ${q.c.map((c, j) => {
-        const disabled = wasAnswered ? "disabled" : "";
-        return `<button ${disabled} onclick="answerQuestion(window.__Q${idx}, ${j}, '${scope}')">${c}</button>`;
+        const isTried = tried[j];
+        // style léger pour feedback : vert si bonne, gris si essayé
+        const isAnswer = j === q.a;
+        const style =
+          rec.correct && isAnswer ? 'style="border:1px solid #43d17e;"' :
+          isTried ? 'style="opacity:.9;border:1px dashed #667;"' : "";
+        return `<button ${style} onclick="answerQuestion(window.__Q${idx}, ${j})">${c}</button>`;
       }).join("")}
-      ${wasAnswered ? `<p style="margin-top:8px;">${wasCorrect ? "✅ Bien joué !" : "❌ Essaie la prochaine"}</p>` : ""}
     </div>
     <script>window.__Q${idx} = ${JSON.stringify(q)};</script>
   `;
@@ -152,7 +170,7 @@ V.quiz = () => {
       <button class="back" onclick="go('menu')">⬅️ Retour</button>`;
   }
   let html = `${scoreHeader()}<h2>📅 Quiz du jour (${state.day})</h2>`;
-  qs.forEach((q, i) => html += renderQuestionCard(q, i, "day"));
+  qs.forEach((q, i) => html += renderQuestionCard(q, i));
   html += `<button class="back" onclick="go('menu')">⬅️ Retour</button>`;
   return html;
 };
@@ -166,7 +184,7 @@ V.quizAll = () => {
       <button class="back" onclick="go('menu')">⬅️ Retour</button>`;
   }
   let html = `${scoreHeader()}<h2>📚 Toutes les questions (${qs.length})</h2>`;
-  qs.forEach((q, i) => html += renderQuestionCard(q, i, "all"));
+  qs.forEach((q, i) => html += renderQuestionCard(q, i));
   html += `<button class="back" onclick="go('menu')">⬅️ Retour</button>`;
   return html;
 };
