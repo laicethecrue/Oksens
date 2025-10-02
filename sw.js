@@ -1,5 +1,5 @@
 // Service Worker pour cache offline
-const CACHE = "oksens-v13";
+const CACHE = "oksens-v14";
 const ASSETS = ["./","./index.html","./styles.css","./app.js","./data.json"];
 
 self.addEventListener("install", e=>{
