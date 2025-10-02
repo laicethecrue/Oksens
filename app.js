@@ -1,18 +1,21 @@
 // --- État de l'application ---
 const state = { page: "menu", day: "" };
 
-// --- Base de données (sera remplacée par data.json si tu veux l'intégrer via fetch) ---
-const DB = {
-  questions: {
-    lundi: [],
-    mardi: [],
-    mercredi: [],
-    jeudi: [],
-    vendredi: [],
-    samedi: [],
-    dimanche: []
+// --- Base de données vide (remplie après fetch du data.json) ---
+const DB = { questions: {} };
+
+// --- Charger les questions depuis data.json ---
+async function loadQuestions() {
+  try {
+    const res = await fetch("data.json");
+    const data = await res.json();
+    DB.questions = data.questions;
+    console.log("✅ Questions chargées :", DB.questions);
+    render();
+  } catch (e) {
+    console.error("Erreur de chargement du data.json :", e);
   }
-};
+}
 
 // --- Fonctions utilitaires ---
 function questionsToday() {
@@ -97,4 +100,4 @@ function render() {
 }
 
 // --- Initialisation ---
-render();
+loadQuestions();
