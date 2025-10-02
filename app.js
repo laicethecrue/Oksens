@@ -1,7 +1,7 @@
 // --- État de l'application ---
 const state = { page: "menu", day: "" };
 
-// --- Base de données des questions (remplacée par data.json dans ton repo) ---
+// --- Base de données (sera remplacée par data.json si tu veux l'intégrer via fetch) ---
 const DB = {
   questions: {
     lundi: [],
@@ -38,27 +38,36 @@ function go(p) {
 const V = {};
 
 V.menu = () => `
-  <h2>Menu</h2>
+  <h2>Menu principal</h2>
   <p>Choisis ton mode :</p>
-  <button onclick="state.day='lundi';go('quiz')">📅 Quiz du jour</button><br><br>
+  <button onclick="selectDay()">📅 Quiz du jour</button><br><br>
   <button onclick="go('quizAll')">📚 Toutes les questions</button>
 `;
+
+function selectDay() {
+  let jours = ["lundi","mardi","mercredi","jeudi","vendredi","samedi","dimanche"];
+  let choix = prompt("Choisis un jour : lundi, mardi, mercredi, jeudi, vendredi, samedi ou dimanche");
+  if (jours.includes(choix)) {
+    state.day = choix;
+    go("quiz");
+  } else {
+    alert("Jour invalide. Essaie encore.");
+  }
+}
 
 V.quiz = () => {
   let qs = questionsToday();
   if (!qs.length)
-    return `<p>⚠️ Aucune question pour aujourd'hui.</p><button onclick="go('menu')">⬅️ Retour</button>`;
+    return `<p>⚠️ Aucune question pour ${state.day}.</p><button onclick="go('menu')">⬅️ Retour</button>`;
   
   let html = `<h2>📅 Quiz du jour (${state.day})</h2>`;
   qs.forEach((q, i) => {
     html += `<div class="card">
       <p><b>Q${i + 1}:</b> ${q.q}</p>
-      ${q.c
-        .map(
-          (c, j) =>
-            `<button onclick="alert('${j == q.a ? "✅ Bonne réponse!" : "❌ Mauvaise réponse…"}')">${c}</button>`
-        )
-        .join("<br>")}
+      ${q.c.map(
+        (c, j) =>
+          `<button onclick="alert('${j == q.a ? "✅ Bonne réponse!" : "❌ Mauvaise réponse…"}')">${c}</button>`
+      ).join("<br>")}
     </div>`;
   });
   return html + `<br><button onclick="go('menu')">⬅️ Retour</button>`;
@@ -73,12 +82,10 @@ V.quizAll = () => {
   qs.forEach((q, i) => {
     html += `<div class="card">
       <p><b>Q${i + 1}:</b> ${q.q}</p>
-      ${q.c
-        .map(
-          (c, j) =>
-            `<button onclick="alert('${j == q.a ? "✅ Bonne réponse!" : "❌ Mauvaise réponse…"}')">${c}</button>`
-        )
-        .join("<br>")}
+      ${q.c.map(
+        (c, j) =>
+          `<button onclick="alert('${j == q.a ? "✅ Bonne réponse!" : "❌ Mauvaise réponse…"}')">${c}</button>`
+      ).join("<br>")}
     </div>`;
   });
   return html + `<br><button onclick="go('menu')">⬅️ Retour</button>`;
