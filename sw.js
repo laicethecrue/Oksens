@@ -1,16 +1,19 @@
+// Service Worker pour cache offline
 const CACHE = "oksens-v12";
-const FILES = [
-  "/oksens/",
-  "/oksens/index.html",
-  "/oksens/styles.css",
-  "/oksens/app.js",
-  "/oksens/data.json"
-];
+const ASSETS = ["./","./index.html","./styles.css","./app.js","./data.json"];
 
-self.addEventListener("install", e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)));
+self.addEventListener("install", e=>{
+  e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)));
 });
 
-self.addEventListener("fetch", e => {
-  e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
+self.addEventListener("activate", e=>{
+  e.waitUntil(
+    caches.keys().then(keys=>
+      Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))
+    )
+  );
+});
+
+self.addEventListener("fetch", e=>{
+  e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)));
 });
