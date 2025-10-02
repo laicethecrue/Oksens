@@ -1,67 +1,140 @@
 {
   "questions": {
     "lundi": [
-      {"q":"Quand ton défenseur est derrière le filet, où te places-tu ?","c":["Au banc","Devant le filet","En attaque"],"a":1},
-      {"q":"Quand un attaquant adverse est devant ton gardien, tu dois :","c":["Le laisser tranquille","Le déplacer avec ton corps","Aller patiner ailleurs"],"a":1},
-      {"q":"Comme ailier, en zone défensive, ton rôle est surtout de :","c":["Attendre la passe longue","Couvrir le défenseur adverse","Partir en échappée"],"a":1},
-      {"q":"Si tu es trop haut en zone défensive :","c":["Tu crées un trou dans la couverture","Tu protèges mieux le gardien","Tu aides à l’offensive"],"a":0},
-      {"q":"En infériorité numérique, ton objectif est de :","c":["Protéger le centre et bloquer les tirs","Attaquer à 2 contre 1","Sortir du jeu"],"a":0},
-      {"q":"Si la rondelle est libre dans l’enclave :","c":["Tu attends qu’un autre la prenne","Tu dégage le disque immédiatement","Tu recules vers le banc"],"a":1},
-      {"q":"Pour bloquer un tir, la bonne technique est :","c":["Fermer les yeux","Plier les genoux et présenter le corps","Patiner en cercle"],"a":1}
+      {
+        "q": "Quand ton défenseur est derrière le filet, où te places-tu ?",
+        "c": ["Au banc", "Devant le filet", "En attaque"],
+        "a": 1,
+        "p": 15
+      },
+      {
+        "q": "Quand un attaquant adverse est devant ton gardien, tu dois :",
+        "c": ["Le laisser tranquille", "Le déplacer avec ton corps", "Aller patiner ailleurs"],
+        "a": 1,
+        "p": 10
+      }
     ],
     "mardi": [
-      {"q":"En 2 contre 1, que faire si le défenseur bloque la passe ?","c":["Forcer la passe","Tirer au filet","Reculer"],"a":1},
-      {"q":"Pourquoi placer un écran devant le gardien ?","c":["Pour bloquer sa vue","Pour l’empêcher de sortir","Pour lui parler"],"a":0},
-      {"q":"Après un tir, ton rôle immédiat est :","c":["Tourner le dos","Suivre pour le rebond","Retourner au banc"],"a":1},
-      {"q":"Pour déjouer un défenseur à 1 contre 1 :","c":["Faire une feinte de corps","Patiner droit sur lui","Attendre un hors-jeu"],"a":0},
-      {"q":"Quand tu entres en zone offensive :","c":["Tirer toujours de la ligne bleue","Garder la rondelle longtemps","Prendre une décision rapide"],"a":2},
-      {"q":"Devant le filet adverse, ton rôle est de :","c":["Bouger pour créer de l’espace","Rester immobile","Te cacher derrière le gardien"],"a":0},
-      {"q":"Sur un avantage numérique, ton objectif est :","c":["Tirer de partout","Déplacer la rondelle rapidement","Attendre que l’adversaire se fatigue"],"a":1}
+      {
+        "q": "En 2 contre 1, que faire si le défenseur bloque la passe ?",
+        "c": ["Forcer la passe", "Tirer au filet", "Reculer"],
+        "a": 1,
+        "p": 10
+      },
+      {
+        "q": "Pourquoi placer un écran devant le gardien ?",
+        "c": ["Pour bloquer sa vue", "Pour l’empêcher de sortir", "Pour lui parler"],
+        "a": 0,
+        "p": 10
+      }
     ],
     "mercredi": [
-      {"q":"Quand ton coéquipier transporte la rondelle en zone neutre, que fais-tu ?","c":["Rester dans sa ligne","Te démarquer","T’arrêter"],"a":1},
-      {"q":"Si tu n’as pas la rondelle, ton rôle est de :","c":["Attendre","Créer une option de passe","Regarder"],"a":1},
-      {"q":"Lire le jeu signifie :","c":["Deviner au hasard","Observer la position et anticiper","Attendre un ordre"],"a":1},
-      {"q":"Si ton coéquipier est pressé en zone défensive :","c":["Tu lui cries dessus","Tu te rends dispo pour sortie de zone","Tu pars en offensive"],"a":1},
-      {"q":"Quand tu entres en zone offensive :","c":["Forcer au centre","Évaluer les options","Tirer les yeux fermés"],"a":1},
-      {"q":"Si tu vois un joueur seul devant le filet adverse :","c":["Garder la rondelle","Passer rapidement","Revenir en arrière"],"a":1},
-      {"q":"Dans la zone neutre, un bon joueur :","c":["Attend la rondelle","Se replace pour couper les passes","Change de ligne"],"a":1}
+      {
+        "q": "Quand ton coéquipier transporte la rondelle en zone neutre, que fais-tu ?",
+        "c": ["Rester sur place", "Te démarquer pour offrir une option", "Le suivre collé"],
+        "a": 1,
+        "p": 10
+      },
+      {
+        "q": "Avant de recevoir la rondelle, que dois-tu vérifier ?",
+        "c": ["L’endroit où est le banc", "La position des adversaires et coéquipiers", "Le tableau indicateur"],
+        "a": 1,
+        "p": 10
+      }
     ],
     "jeudi": [
-      {"q":"En bataille le long de la bande, la première règle est :","c":["Baisser ton centre de gravité","Lever ton bâton haut","Regarder seulement la rondelle"],"a":0},
-      {"q":"Pour protéger la rondelle :","c":["Tourner le dos à l’adversaire","L’éloigner de ton corps","Patiner sans corps"],"a":0},
-      {"q":"Pour gagner une mise au jeu :","c":["Être explosif et rapide","Lever le bâton de l’autre","Tourner en rond"],"a":0},
-      {"q":"L’intensité veut dire :","c":["Se donner à 100%","Être en colère","Ne pas respirer"],"a":0},
-      {"q":"Quand tu perds la rondelle, la bonne réaction est :","c":["Abandonner","Revenir vite","Crier"],"a":1},
-      {"q":"Quand tu es fatigué :","c":["Rester sur la glace","Faire un changement court","Ralentir volontairement"],"a":1},
-      {"q":"En 1 contre 1 défensif, ton objectif est :","c":["Arrêter l’attaquant","Le regarder passer","Laisser le gardien gérer"],"a":0}
+      {
+        "q": "Pourquoi fléchir les genoux avant une mise en jeu ?",
+        "c": ["Pour être explosif", "Pour être plus petit", "Pour te reposer"],
+        "a": 0,
+        "p": 10
+      }
     ],
     "vendredi": [
-      {"q":"Que fais-tu quand il n’y a pas d’option de passe claire ?","c":["Forcer","Attendre immobile","Créer du mouvement"],"a":2},
-      {"q":"Sur une entrée de zone, une option créative est :","c":["Feinte tir + passe arrière","Tir de loin systématique","Tourner en rond"],"a":0},
-      {"q":"Être créatif veut dire :","c":["Essayer des choses imprévisibles","Toujours répéter","Refuser de passer"],"a":0},
-      {"q":"Quand tu es derrière le filet adverse :","c":["Garder la rondelle","Chercher une passe rapide","Tirer"],"a":1},
-      {"q":"En supériorité, une belle option est :","c":["Tir direct sans regarder","Passe transversale rapide","Dégagement"],"a":1},
-      {"q":"Pour surprendre un gardien :","c":["Viser même coin","Varier feintes et angles","Crier son intention"],"a":1},
-      {"q":"La créativité doit toujours être combinée à :","c":["Discipline","Hasard","Impro totale"],"a":0}
+      {
+        "q": "Si tu n’as pas d’option de passe, que faire ?",
+        "c": ["Garder la rondelle sans bouger", "Bouger tes pieds et créer une option", "Donner à l’adversaire"],
+        "a": 1,
+        "p": 10
+      }
     ],
     "samedi": [
-      {"q":"Ton équipe mène d’un but à 2 minutes de la fin :","c":["Attaquer","Prioriser défensive","Sortir du jeu"],"a":1},
-      {"q":"Ton équipe perd d’un but à 1 minute de la fin :","c":["Rester défensif","Retirer le gardien","Attendre"],"a":1},
-      {"q":"En prolongation 3 contre 3, ton objectif est :","c":["Garder la rondelle","Tirer de loin","Attendre la fin"],"a":0},
-      {"q":"Quand tu es en désavantage numérique :","c":["Changer sans raison","Jouer compact","Attaquer seul"],"a":1},
-      {"q":"En tir de barrage, un bon choix est :","c":["Patiner droit","Feinte de tir","Tir de la bleue"],"a":1},
-      {"q":"En 3e période serrée, la clé est :","c":["Discipline et patience","Jouer chacun pour soi","Faire n’importe quoi"],"a":0},
-      {"q":"Quand tu mènes 3-0 au 1er tiers :","c":["Rester concentré","Relâcher","Sortir gardiens"],"a":0}
+      {
+        "q": "Lors d’un match simulé, quelle est la meilleure attitude ?",
+        "c": ["Donner le minimum", "Jouer comme un vrai match", "Attendre les autres"],
+        "a": 1,
+        "p": 10
+      }
     ],
     "dimanche": [
-      {"q":"Quand tu sors du banc :","c":["Vérifier pas de surnombre","Patiner direct au but","Attendre"],"a":0},
-      {"q":"Sur une mise au jeu, le centre doit :","c":["Observer les ailiers/défenseurs","Attendre","Créer hors-jeu"],"a":0},
-      {"q":"Rôle d’un ailier en zone défensive :","c":["Couvrir défenseur adverse","Attaquer","Se reposer"],"a":0},
-      {"q":"Une bonne sortie de zone commence par :","c":["Passe précise","Dégagement interdit","Un tir"],"a":0},
-      {"q":"Le gardien est ton :","c":["Ennemi","Dernier rempart","Remplaçant"],"a":1},
-      {"q":"En infériorité, un bon joueur :","c":["Bloque lignes de passe","Se repose","Tire partout"],"a":0},
-      {"q":"La clé pour progresser au hockey est :","c":["Effort constant","Hasard","Les cris"],"a":0}
+      {
+        "q": "Pourquoi pratiquer ton jeu sans rondelle est essentiel ?",
+        "c": ["Car tu as la rondelle seulement 10% du temps", "Car tu veux impressionner le coach", "Car tu veux te reposer"],
+        "a": 0,
+        "p": 10
+      }
+    ],
+    "avantpasse": [
+      {
+        "q": "Que dois-tu faire en premier avant de recevoir une passe ?",
+        "c": ["Regarder tes patins", "Lever la tête et scanner le jeu", "Fermer les yeux"],
+        "a": 1,
+        "p": 10
+      },
+      {
+        "q": "Pourquoi est-il important de jeter un coup d’œil derrière toi avant la passe ?",
+        "c": ["Pour voir si le coach te regarde", "Pour anticiper la pression adverse", "Pour perdre du temps"],
+        "a": 1,
+        "p": 10
+      },
+      {
+        "q": "Quelle position doivent avoir tes mains sur le bâton avant la réception ?",
+        "c": ["Très rapprochées", "Main du haut ferme, main du bas souple", "Les deux au milieu"],
+        "a": 1,
+        "p": 10
+      },
+      {
+        "q": "Que faire de ton corps pour mieux recevoir la passe ?",
+        "c": ["Être immobile", "Bouger les pieds et rester disponible", "Regarder le plafond"],
+        "a": 1,
+        "p": 10
+      },
+      {
+        "q": "Quel est le meilleur moment pour bouger ton bâton ?",
+        "c": ["Quand la passe est déjà arrivée", "Avant qu’elle parte", "Jamais"],
+        "a": 1,
+        "p": 10
+      },
+      {
+        "q": "Pourquoi communiquer avant la passe est important ?",
+        "c": ["Pour dire merci", "Pour indiquer à ton coéquipier que tu es prêt", "Pour distraire l’adversaire"],
+        "a": 1,
+        "p": 10
+      },
+      {
+        "q": "Où dois-tu regarder avant de recevoir la passe ?",
+        "c": ["Seulement le puckeur", "Le jeu autour (coéquipiers et adversaires)", "Le tableau indicateur"],
+        "a": 1,
+        "p": 10
+      },
+      {
+        "q": "Que faire si tu vois un adversaire approcher avant de recevoir la passe ?",
+        "c": ["Te figer", "Te replacer pour créer de l’espace", "Lui donner ta palette"],
+        "a": 1,
+        "p": 10
+      },
+      {
+        "q": "Pourquoi garder les genoux fléchis avant une passe ?",
+        "c": ["Pour être plus explosif et réagir vite", "Pour te reposer", "Pour paraître plus petit"],
+        "a": 0,
+        "p": 10
+      },
+      {
+        "q": "Quel est le réflexe à avoir juste avant que la rondelle arrive sur ta palette ?",
+        "c": ["Fermer les yeux", "Regarder la rondelle et préparer ta prochaine action", "Lever ton bâton"],
+        "a": 1,
+        "p": 10
+      }
     ]
   }
 }
