@@ -1,4 +1,4 @@
-const CACHE = "oksens-v10";
+const CACHE = "oksens-v11";
 const FILES = [
   "/oksens/",
   "/oksens/index.html",
